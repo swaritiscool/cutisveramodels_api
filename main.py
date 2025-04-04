@@ -13,6 +13,10 @@ from fastai.vision.core import PILImage
 import base64
 import torch
 import torch.nn.functional as F
+import pathlib
+import platform
+plt = platform.system()
+if plt == 'Linux': pathlib.WindowsPath = pathlib.PosixPath
 
 # Load Fastai Image Model
 MODEL_PATH = "fastai_resnet_101_model_DERMNET_gradual_10.pkl"  # Update with your model's filename
