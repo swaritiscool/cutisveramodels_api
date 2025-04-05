@@ -1,6 +1,6 @@
-fastai
-fastapi
-uvicorn
+fastai==2.7.19
+fastapi==0.115.12
+uvicorn==0.34.0
 setuptools==69.5.1
-wheel
-spacy==3.7.2
+wheel==0.44.0
+spacy==3.8.4
