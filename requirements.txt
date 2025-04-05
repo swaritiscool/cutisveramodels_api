@@ -3,3 +3,4 @@ fastapi
 uvicorn
 setuptools==69.5.1
 wheel
+spacy==3.7.2
