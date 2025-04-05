@@ -1,28 +1,30 @@
-# Use an official lightweight Python image
 FROM python:3.10-slim
 
-# Avoid prompts during build
-ENV DEBIAN_FRONTEND=noninteractive
+# Avoid Python bytecode and buffering
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PIP_NO_CACHE_DIR=1
+ENV PIP_DEFAULT_TIMEOUT=100
 
-# Install system dependencies
+# Force pip to prefer prebuilt binaries (especially for blis)
+ENV PIP_INSTALL_OPTIONS="--prefer-binary"
+
+# Install system build tools (just in case)
 RUN apt-get update && apt-get install -y \
-    git \
-    libgl1-mesa-glx \
-    libglib2.0-0 \
+    build-essential \
+    gcc \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Set work directory
-WORKDIR .
+# Copy requirements and install dependencies
+COPY requirements.txt .
+RUN pip install $PIP_INSTALL_OPTIONS -r requirements.txt
 
-# Copy all files to container
+# Copy all project files into the container
 COPY . .
 
-# Install Python dependencies
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
-
-# Expose port
+# Expose port 8000
 EXPOSE 8000
 
-# Run the FastAPI server
+# Start the FastAPI app
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
