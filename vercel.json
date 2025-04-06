@@ -1,7 +1,7 @@
 {
   "builds": [
     {
-      "src": "app.py",
+      "src": "main.py",
       "use": "@vercel/python",
       "config": { "maxLambdaSize": "584mb", "runtime": "python3.9" }
     }
@@ -11,5 +11,6 @@
       "src": "/(.*)",
       "dest": "main.py"
     }
-  ]
+  ],
+  "rewrites": [{ "source": "/(.*)", "destination": "main.py" }]
 }
