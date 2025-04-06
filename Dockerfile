@@ -6,7 +6,7 @@ WORKDIR ./
 
 # Copy the requirements file (if you have one) and the application code
 COPY requirements.txt ./
-COPY mian.py
+COPY main.py
 
 # Install the required packages
 RUN pip install --no-cache-dir -r requirements.txt
