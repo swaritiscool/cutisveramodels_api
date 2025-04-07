@@ -1,7 +1,7 @@
 """
 RUN WITH THIS:
 
-uvicorn api:app --host 0.0.0.0 --port 8000
+uvicorn main:app --host 0.0.0.0 --port 8000
 """
 
 from fastapi import FastAPI, UploadFile, File, HTTPException, Header, Depends
