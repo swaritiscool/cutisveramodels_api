@@ -6,3 +6,4 @@ scikit-learn==1.3.2
 torch==2.1.0
 dotenv
 gdown
+--upgrade pip

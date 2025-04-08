@@ -15,23 +15,22 @@ import os
 from dotenv import load_dotenv
 import pathlib
 import platform
-import gdown
+from download_google_drive import download_google_drive_models
+import uvicorn
 plt = platform.system()
 if plt == 'Linux': pathlib.WindowsPath = pathlib.PosixPath
 
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
-path = os.getcwd()
-txt_model_url = "https://drive.google.com/file/d/1rLdZBufn_d0UHZfAB51xw1R41SKgEffB"
-img_model_url = "https://drive.google.com/file/d/1vUdwHPWhIYTb1xhdxtdyo0Erl4PEsIQe"
+download_google_drive_models()
 
 print("Available files:", os.listdir())
 
-gdown.download(txt_model_url, path+"/txt_model.pkl")
-print("Downloaded txt model")
-gdown.download(img_model_url, path+"/img_model.pkl")
-print("Downloaded img model")
+print("Downloaded txt size:", os.path.getsize("txt_model.pkl"))
+print("Downloaded img size:", os.path.getsize("img_model.pkl"))
+
+path = os.getcwd()
 
 # Load Fastai Image Model
 MODEL_PATH = path+"/img_model.pkl"  # Update with your model's filename
@@ -131,3 +130,6 @@ async def predict_text(input: TextInput, auth=Depends(verify_api_key)):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Text inference failed: {e}")
+if __name__ == "__main__":
+    port = os.getenv("PORT") or 8000
+    uvicorn.run(app, host="0.0.0.0", port=int(port))
