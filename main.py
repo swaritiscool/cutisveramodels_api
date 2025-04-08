@@ -15,6 +15,7 @@ import os
 from dotenv import load_dotenv
 import pathlib
 import platform
+import gdown
 plt = platform.system()
 if plt == 'Linux': pathlib.WindowsPath = pathlib.PosixPath
 
@@ -22,12 +23,21 @@ load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
 path = os.getcwd()
+txt_model_url = "https://drive.google.com/file/d/1rLdZBufn_d0UHZfAB51xw1R41SKgEffB"
+img_model_url = "https://drive.google.com/file/d/1vUdwHPWhIYTb1xhdxtdyo0Erl4PEsIQe"
+
+print("Available files:", os.listdir())
+
+gdown.download(txt_model_url, path+"txt_model.pkl")
+print("Downloaded txt model")
+gdown.download(img_model_url, path+"img_model.pkl")
+print("Downloaded img model")
 
 # Load Fastai Image Model
-MODEL_PATH = path+"/fastai_resnet_101_model_DERMNET_gradual_10.pkl"  # Update with your model's filename
+MODEL_PATH = path+"/img_model.pkl"  # Update with your model's filename
 
 # Load Torch Text Model
-TXT_MODEL_PATH = path+"/finetuned_text3.pkl"  # Update with your model's filename
+TXT_MODEL_PATH = path+"/txt_model.pkl"  # Update with your model's filename
 
 try:
     learn = load_learner(MODEL_PATH)
