@@ -24,10 +24,10 @@ API_KEY = os.getenv("API_KEY")
 path = os.getcwd()
 
 # Load Fastai Image Model
-MODEL_PATH = path+"fastai_resnet_101_model_DERMNET_gradual_10.pkl"  # Update with your model's filename
+MODEL_PATH = path+"/fastai_resnet_101_model_DERMNET_gradual_10.pkl"  # Update with your model's filename
 
 # Load Torch Text Model
-TXT_MODEL_PATH = path+"finetuned_text3.pkl"  # Update with your model's filename
+TXT_MODEL_PATH = path+"/finetuned_text3.pkl"  # Update with your model's filename
 
 try:
     learn = load_learner(MODEL_PATH)
