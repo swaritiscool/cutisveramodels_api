@@ -28,9 +28,9 @@ img_model_url = "https://drive.google.com/file/d/1vUdwHPWhIYTb1xhdxtdyo0Erl4PEsI
 
 print("Available files:", os.listdir())
 
-gdown.download(txt_model_url, path+"txt_model.pkl")
+gdown.download(txt_model_url, path+"/txt_model.pkl")
 print("Downloaded txt model")
-gdown.download(img_model_url, path+"img_model.pkl")
+gdown.download(img_model_url, path+"/img_model.pkl")
 print("Downloaded img model")
 
 # Load Fastai Image Model
