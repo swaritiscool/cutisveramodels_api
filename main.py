@@ -18,8 +18,7 @@ import platform
 plt = platform.system()
 if plt == 'Linux': pathlib.WindowsPath = pathlib.PosixPath
 
-load_dotenv()
-API_KEY = os.getenv("API_KEY")
+API_KEY = "SiC2021%$@:23"
 
 # Load Fastai Image Model
 MODEL_PATH = "fastai_resnet_101_model_DERMNET_gradual_10.pkl"  # Update with your model's filename
