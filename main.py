@@ -27,7 +27,7 @@ if plt == 'Linux': pathlib.WindowsPath = pathlib.PosixPath
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
-def load_learner(fname, cpu=True):
+def load_model(fname, cpu=True):
     "Load a `Learner` object in `fname`, by default putting it on the `cpu`"
     map_loc = 'cpu'
     try:
@@ -73,13 +73,13 @@ TXT_MODEL_PATH = path+"/txt_model.pth"  # Update with your model's filename
 VOCAB_PATH = path+"/vocab.pth"  # Update with your model's filename
 
 try:
-    learn = load_learner(MODEL_PATH)
+    learn = load_model(MODEL_PATH)
 except Exception as e:
     raise RuntimeError(f"Failed to load image model: {e}")
 
 # Load Torch text model (assumes simple architecture)
 try:
-    learn_txt = load_learner(TXT_MODEL_PATH)
+    learn_txt = load_model(TXT_MODEL_PATH)
 except Exception as e:
     raise RuntimeError(f"Failed to load text model: {e}")
 
