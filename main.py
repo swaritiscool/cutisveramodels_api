@@ -19,6 +19,7 @@ from PIL import Image
 import torchvision.transforms as transforms
 import torch
 import spacy
+import gc
 # os.system("python -m spacy download en_core_web_sm")
 nlp = spacy.load("en_core_web_sm")
 plt = platform.system()
@@ -141,9 +142,19 @@ async def predict_image(file: UploadFile = File(...), auth=Depends(verify_api_ke
             "all_labels": [round(p, 6) for p in probs[0].tolist()],
             "list_order": ["Acne & Rosacea", "Atopic Dermatitis", "Bullous Disease", "Eczema", "Normal"],
         }
+        
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail=str(e))
+    
+    finally:
+        # 🔥 Cleanup
+        for var in ['image', 'input_tensor', 'logits', 'probs']:
+            if var in locals():
+                del locals()[var]
+        gc.collect()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
 
 # Pydantic model for input
 class TextInput(BaseModel):
@@ -184,6 +195,15 @@ async def predict_text(input: TextInput, auth=Depends(verify_api_key)):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Text inference failed: {e}")
+    
+    finally:
+        # 🔥 Memory cleanup
+        for var in ['tokens', 'token_ids', 'input_tensor', 'logits', 'probs']:
+            if var in locals():
+                del locals()[var]
+        gc.collect()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
 
 if __name__ == "__main__":
     port = os.getenv("PORT") or 8000
