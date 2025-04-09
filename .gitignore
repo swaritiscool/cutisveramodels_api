@@ -1,2 +1,5 @@
 .env
 __pycache__/main.cpython-312.pyc
+lib
+__pycache__
+v1_large
